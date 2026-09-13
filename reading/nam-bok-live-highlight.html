@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reading with Karolin — Nam-Bok</title><style>html,body{margin:0;height:100%}iframe{width:100%;height:100%;border:0;display:block}</style></head><body><iframe id="page" src="nam-bok-live.html?v=highlight2"></iframe><script>
+const frame=document.getElementById('page');
+frame.addEventListener('load',()=>{
+  const w=frame.contentWindow,d=w.document;
+  const s=d.createElement('script');
+  s.textContent=`
+    function clearHL(){document.querySelectorAll('#reader .sentence.on').forEach(x=>x.classList.remove('on'));}
+    function markHL(track,total){
+      clearHL();
+      const list=[...document.querySelectorAll('#reader .sentence')];
+      if(!list.length||!total)return;
+      const a=Math.floor(track*list.length/total),b=Math.max(a+1,Math.floor((track+1)*list.length/total));
+      list.slice(a,b).forEach(x=>x.classList.add('on'));
+      if(list[a])list[a].scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    const oldRender=render;
+    render=function(){oldRender();document.querySelectorAll('#reader p').forEach((p,i)=>{p.classList.add('sentence');p.dataset.i=i;});clearHL();};
+    const oldStop=stop;
+    stop=function(){oldStop();clearHL();};
+    next=function(){
+      const d=DATA[lang],a=document.getElementById('audioPlayer');
+      if(!reading||idx>=d.audio.length){reading=false;clearHL();return;}
+      const track=idx;
+      markHL(track,d.audio.length);
+      a.src=d.audio[idx++];
+      a.play().catch(()=>{});
+      a.onended=next;
+    };
+    render();
+  `;
+  d.body.appendChild(s);
+});
+</script></body></html>
