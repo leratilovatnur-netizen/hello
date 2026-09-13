@@ -1,18 +1,22 @@
-function karolinVocabVoice(text){
-  if(!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  const current=(typeof lang!=='undefined'?lang:(typeof currentLang!=='undefined'?currentLang:'en'));
-  const locale=current==='fr'?'fr-FR':current==='es'?'es-ES':'en-US';
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang=locale;
-  u.rate=.78;
-  u.pitch=1;
-  const voices=window.speechSynthesis.getVoices();
-  const preferredNames=current==='fr'?['Audrey','Thomas','Amélie']:current==='es'?['Mónica','Paulina','Jorge']:['Samantha','Ava','Allison'];
-  let v=voices.find(x=>preferredNames.some(n=>x.name&&x.name.includes(n))&&x.lang&&x.lang.toLowerCase().startsWith(locale.slice(0,2).toLowerCase()));
-  if(!v)v=voices.find(x=>x.lang===locale)||voices.find(x=>x.lang&&x.lang.toLowerCase().startsWith(locale.slice(0,2).toLowerCase()));
-  if(v)u.voice=v;
-  window.speechSynthesis.speak(u);
-}
-window.speakWord=karolinVocabVoice;
-window.word=karolinVocabVoice;
+(function(){
+  function karolinVocabVoice(text){
+    try{
+      if(!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      var current=(typeof lang!=='undefined'?lang:(typeof currentLang!=='undefined'?currentLang:'en'));
+      var u=new SpeechSynthesisUtterance(text);
+      u.lang=current==='fr'?'fr-FR':current==='es'?'es-ES':'en-US';
+      u.rate=0.82;
+      u.pitch=1;
+      var voices=window.speechSynthesis.getVoices();
+      var code=u.lang.toLowerCase();
+      var base=code.slice(0,2);
+      var preferred=voices.find(function(v){return (v.lang||'').toLowerCase()===code;})||voices.find(function(v){return (v.lang||'').toLowerCase().slice(0,2)===base;});
+      if(preferred) u.voice=preferred;
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  window.speakWord=karolinVocabVoice;
+  window.word=karolinVocabVoice;
+  if('speechSynthesis' in window){window.speechSynthesis.getVoices();}
+})();
