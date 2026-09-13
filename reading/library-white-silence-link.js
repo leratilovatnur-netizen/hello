@@ -1,0 +1,1 @@
+window.addEventListener('load',()=>{const b3=document.getElementById('b3'),frame=document.getElementById('book');if(b3&&frame)b3.onclick=()=>{frame.src='white-silence-complete.html?v=b77dbab';document.querySelectorAll('.books button').forEach(b=>b.classList.remove('active'));b3.classList.add('active')}});
