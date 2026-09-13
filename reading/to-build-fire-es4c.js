@@ -1,0 +1,1 @@
+window.TBF_ES4C=["Consiguió llevar las cerillas hasta la boca. El hielo de los labios crujió al abrirlos. Separó una cerilla con los dientes, la tomó también con los dientes y la frotó contra la pierna. Tras muchos intentos consiguió encenderla y acercó la llama a la corteza de abedul, pero el humo de azufre le provocó una fuerte tos. La cerilla cayó en la nieve y se apagó."];
