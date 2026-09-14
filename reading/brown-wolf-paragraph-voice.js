@@ -1,0 +1,1 @@
+setTimeout(function(){var list=[].slice.call(document.querySelectorAll('#reader .sentence'));list.forEach(function(p,i){p.style.cursor='pointer';p.onclick=function(){list.forEach(function(x,n){x.classList.toggle('on',n===i)});if(window.audioPlayer)audioPlayer.pause();window.currentLang=lang;if(window.speakVocab)window.speakVocab(p.textContent)}})},800);
